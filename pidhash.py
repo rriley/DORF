@@ -1,3 +1,5 @@
+from kstructs import *
+
 class PidHash:
 	def __init__(self, sf, dm):
 		self.tptr = 0
@@ -13,7 +15,7 @@ class PidHash:
 		for i in range(0, 1 << self.pidhash_shift):
 			tptr = dm.read_int(self.pid_hash+4*i)
 			while tptr != 0:
-				dm.read(spid,tptr-36)
+				self.dm.read(spid,tptr-36)
 				print "PID: ",
 				print spid.nr
 				tptr = spid.pid_chain.next;
@@ -21,9 +23,9 @@ class PidHash:
 	def find(self, nr):
                 spid = pid()
                 for i in range(0, 1 << self.pidhash_shift):
-                        tptr = dm.read_int(self.pid_hash+4*i)
+                        tptr = self.dm.read_int(self.pid_hash+4*i)
                         while tptr != 0:
-                                dm.read(spid,tptr-36)
+                                self.dm.read(spid,tptr-36)
 				if spid.nr == nr:
 					return spid
                                 tptr = spid.pid_chain.next;
