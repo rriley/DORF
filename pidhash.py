@@ -15,7 +15,7 @@ class PidHash:
 		for i in range(0, 1 << self.pidhash_shift):
 			tptr = dm.read_int(self.pid_hash+4*i)
 			while tptr != 0:
-				self.dm.read(spid,tptr-36)
+				self.dm.read(spid,tptr-pid.list_offset)
 				print "PID: ",
 				print spid.nr
 				tptr = spid.pid_chain.next;
@@ -25,7 +25,7 @@ class PidHash:
                 for i in range(0, 1 << self.pidhash_shift):
                         tptr = self.dm.read_int(self.pid_hash+4*i)
                         while tptr != 0:
-                                self.dm.read(spid,tptr-36)
+                                self.dm.read(spid,tptr-pid.list_offset)
 				if spid.nr == nr:
 					return spid
                                 tptr = spid.pid_chain.next;

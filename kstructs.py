@@ -21,6 +21,7 @@ class hlist_node(Structure):
 			dm.write(next, self.next)
 
 class pid(Structure):
+	list_offset = 36
 	_fields_ = [	('junk1', c_char * 28),
 			('nr', c_int),
 			('ns', c_void_p),
