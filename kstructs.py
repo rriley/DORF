@@ -22,11 +22,24 @@ class hlist_node(Structure):
 
 class pid(Structure):
 	list_offset = 36
+
 	_fields_ = [	('junk1', c_char * 28),
 			('nr', c_int),
 			('ns', c_void_p),
 			('pid_chain', hlist_node)
 		   ]
+
+	def __str__(self):
+		return "PID: " + str(self.nr)
+
+	def next(self):
+		return self.pid_chain.next
+
+	def pprev(self):
+		return self.pid_chain.pprev
+
+	def compare(self, thing):
+		return thing-self.nr
 
 class task_struct(Structure):
 	_fields_ = [ 	('junk1',c_char * 456), 
