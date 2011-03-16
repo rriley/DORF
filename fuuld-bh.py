@@ -35,7 +35,7 @@ print sizeof(bh)
 print hex(bh_lrus)
 print "---"
 # Read the directory, then get the list...
-print os.listdir("/tmp/MonkeyGreen")
+print os.listdir("/usr/local/MonkeyGreen")
 
 #for i in range(0, 8):
 bh_addr = dm.read_int(bh_lrus + 0x04bf2000)
@@ -61,10 +61,10 @@ while True:
 		fname= dm.read_bytes(bh.b_data+i+8,de.name_len)
 		print fname
 		#print
-		if fname == "bob":
+		if fname == "john":
 			print "found it!"
-			de.rec_len=24
-			#dm.write(de, bh.b_data+i)
+			de.rec_len=32
+			dm.write(de, bh.b_data+i)
 		i += de.rec_len
 		if i >= bh.b_size:
 			break
