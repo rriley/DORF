@@ -76,7 +76,6 @@ class qstr(Structure):
 
 	def get_string(self, dm):
 		return dm.read_bytes(self.name, self.len)		
-				
 
 class dentry(Structure):
 	_fields_ = [	('d_count', c_uint),
@@ -113,3 +112,38 @@ class dentry(Structure):
 	def compare(self, thing):
 		me = self.__str__()
 		return (thing > me) - (thing < me)
+
+class buffer_head(Structure):
+	_fields_ = [	('junk1', c_uint*2),
+			('b_page', c_uint),
+			('b_blocknr', c_uint64),
+			('b_size', c_uint),
+			('b_data', c_uint),
+			('junk2', c_uint*6),
+			('b_count', c_uint)
+		   ]
+	
+	def __str__(self):
+		s = ""
+
+		for i in range(0,2):
+			s += ("junk1["+str(i)+"]: " + hex(self.junk1[i]) + "\n")
+
+		s += "b_page: " + hex(self.b_page) + "\n"
+		s += "b_blocknr: " + hex(self.b_blocknr) + "\n"
+		s += "b_size: " + hex(self.b_size) + "\n"
+		s += "b_data: " + hex(self.b_data) + "\n"
+
+		for i in range(0,6):
+			s += ("junk2["+str(i)+"]: " + hex(self.junk2[i]) + "\n")
+
+		s += "b_count: " + hex(self.b_count) + "\n"
+
+		return s
+
+class dir_entry(Structure):
+	_fields_ = [	('inode', c_uint),
+			('rec_len', c_short),
+			('name_len', c_byte),
+			('file_type', c_byte)
+		   ]
