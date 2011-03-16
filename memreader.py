@@ -46,3 +46,10 @@ class DevMemReader:
 		tmp = c_uint()
 		self.read(tmp,addr)
 		return tmp.value
+
+	def _read_bytes(self, addr, num):
+		self.fd.seek(addr)
+		return self.fd.read(num)
+
+	def read_bytes(self, addr, num):
+		return self._read_bytes(self._virt_to_phys(addr), num)
