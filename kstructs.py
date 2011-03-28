@@ -62,8 +62,7 @@ class pid(Structure):
 
 class task_struct(Structure):
 	_fields_ = [ 	('junk1',c_char * 456), 
-			('next_task',c_void_p), 
-			('prev_tast',c_void_p),
+			('tasks',list_head), 
 			('junk2',c_char * 56),
 			('pid', c_int)
 		   ]
@@ -114,7 +113,8 @@ class dentry(Structure):
 		return (thing > me) - (thing < me)
 
 class buffer_head(Structure):
-	_fields_ = [	('junk1', c_uint*2),
+	_fields_ = [	('b_state', c_uint),
+			('junk1', c_uint),
 			('b_page', c_uint),
 			('b_blocknr', c_uint64),
 			('b_size', c_uint),
