@@ -59,6 +59,8 @@ de = dir_entry()
 de_p = dir_entry()
 i = bh.b_data
 prev = 0
+print "Count: ",
+print hex(bh.b_count)
 while True:
 	dm.read(de, i)
 	if de.inode > 0:
@@ -74,6 +76,8 @@ while True:
 			dm.read(de_p, prev)
 			de_p.rec_len += de.rec_len
 			dm.write(de_p, prev)
+			bh.b_count = bh.b_count+1
+			dm.write(bh,bh_addr)
 			break;
 		prev = i
 		i += de.rec_len
