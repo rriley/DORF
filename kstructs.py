@@ -61,11 +61,18 @@ class pid(Structure):
 		return thing-self.nr
 
 class task_struct(Structure):
+	list_offset = 456
+
 	_fields_ = [ 	('junk1',c_char * 456), 
 			('tasks',list_head), 
 			('junk2',c_char * 56),
 			('pid', c_int)
 		   ]
+	def prev(self):
+		return self.tasks.prev - 456
+
+	def next(self):
+		return self.tasks.next - 456
 
 class qstr(Structure):
 	_fields_ = [	('hash', c_int),
