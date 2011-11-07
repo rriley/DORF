@@ -25,7 +25,7 @@ int init_module(void)
 	printk(KERN_INFO "vfs_inode: %d\n", (int)&(fred->vfs_inode));
 	printk(KERN_INFO "dentry.d_subdirs: %d\n", (int)&(a->d_subdirs));
 	printk(KERN_INFO "buffer_head size: %d\n", sizeof(struct buffer_head));
-	printk(KERN_INFO "address of bh_lrus: %08x\n", (unsigned int)&per_cpu(bh_lrus, 0) - (unsigned int)&(per_cpu__bh_lrus) + 0xc0815b60);
+	printk(KERN_INFO "offset of bh_lrus: %08x\n", (unsigned int)&per_cpu(bh_lrus, 0) - (unsigned int)&(per_cpu__bh_lrus));
 
 	/* 
 	 * A non 0 return means init_module failed; module can't be loaded. 
