@@ -2,7 +2,7 @@
 
 """
 Remove an item from the task list.
-This technique hid a process in older
+This technique hides a process in older
 kernel versions.  It doesn't work anymore.
 
 Ryan Riley

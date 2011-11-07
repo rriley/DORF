@@ -40,13 +40,13 @@ class hlist_node(Structure):
 			dm.write(next, self.next)
 
 class pid(Structure):
+	list_offset = 36
+
 	_fields_ = [	('junk1', c_char * 28),
 			('nr', c_int),
 			('ns', c_void_p),
 			('pid_chain', hlist_node)
 		   ]
-
-	list_offset = 36
 
 	def __str__(self):
 		return "PID: " + str(self.nr)
@@ -69,10 +69,10 @@ class task_struct(Structure):
 			('pid', c_int)
 		   ]
 	def prev(self):
-		return self.tasks.prev - 456
+		return self.tasks.prev - list_offset
 
 	def next(self):
-		return self.tasks.next - 456
+		return self.tasks.next - list_offset
 
 class qstr(Structure):
 	_fields_ = [	('hash', c_int),
@@ -84,6 +84,10 @@ class qstr(Structure):
 		return dm.read_bytes(self.name, self.len)		
 
 class dentry(Structure):
+	list_offset = 20
+	subdirs_offset = 60
+	child_offset = 52
+
 	_fields_ = [	('d_count', c_uint),
 			('d_flags', c_uint),
 			('junk1', c_char*8),
@@ -99,9 +103,6 @@ class dentry(Structure):
 		   ]
 
 	dm = None
-	list_offset = 20
-	subdirs_offset = 60
-	child_offset = 52
 
 	def set_dm(self, dm):
 		self.dm = dm
