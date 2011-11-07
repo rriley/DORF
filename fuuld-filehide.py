@@ -1,8 +1,8 @@
 #!/usr/bin/python
 
 """
-FUULD testing program for testing buffer heads
-Now in Python!
+Hiding a file.  In short, this removes a file from
+a cached directory entry inode.
 
 Ryan Riley
 rriley.cs@gmail.com
@@ -11,11 +11,13 @@ rriley.cs@gmail.com
 import os, sys
 from ctypes import *
 
-from kstructs import *
-from memreader import *
-from symbolfinder import *
-from pidhash import *
-from dentryhash import *
+import version
+exec("from dorf."+version.my_version+".kstructs import *")
+exec("from dorf."+version.my_version+".memreader import *")
+exec("from dorf."+version.my_version+".symbolfinder import *")
+
+from dorf.hashtable.pidhash import *
+from dorf.hashtable.dentryhash import *
 
 
 if len(sys.argv) != 2:

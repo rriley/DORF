@@ -3,7 +3,8 @@
 """
 Remove an item from the task list.
 This technique hides a process in older
-kernel versions.  It doesn't work anymore.
+kernel versions.  It doesn't work in
+modern versions.
 
 Ryan Riley
 rriley.cs@gmail.com
@@ -12,9 +13,10 @@ rriley.cs@gmail.com
 import os, sys
 from ctypes import *
 
-from kstructs import *
-from memreader import *
-from symbolfinder import *
+import version
+exec("from dorf."+version.my_version+".kstructs import *")
+exec("from dorf."+version.my_version+".memreader import *")
+exec("from dorf."+version.my_version+".symbolfinder import *")
 
 if len(sys.argv) != 2:
 	print "Usage: ",

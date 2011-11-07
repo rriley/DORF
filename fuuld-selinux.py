@@ -12,9 +12,10 @@ rriley.cs@gmail.com
 import os, sys
 from ctypes import *
 
-from kstructs import *
-from memreader import *
-from symbolfinder import *
+import version
+exec("from dorf."+version.my_version+".kstructs import *")
+exec("from dorf."+version.my_version+".memreader import *")
+exec("from dorf."+version.my_version+".symbolfinder import *")
 
 sf = SymbolFinder()
 dm = DevMemReader(sf)

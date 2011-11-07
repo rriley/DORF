@@ -1,8 +1,7 @@
 #!/usr/bin/python
 
 """
-FUULD using the pidhash removal technique.
-Now in Python!
+Remove an item from the PidHash table.
 
 Ryan Riley
 rriley.cs@gmail.com
@@ -11,10 +10,12 @@ rriley.cs@gmail.com
 import os, sys
 from ctypes import *
 
-from kstructs import *
-from memreader import *
-from symbolfinder import *
-from pidhash import *
+import version
+exec("from dorf."+version.my_version+".kstructs import *")
+exec("from dorf."+version.my_version+".memreader import *")
+exec("from dorf."+version.my_version+".symbolfinder import *")
+
+from dorf.hashtable.pidhash import *
 
 
 if len(sys.argv) != 2:
