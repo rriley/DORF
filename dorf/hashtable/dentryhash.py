@@ -1,4 +1,3 @@
-from kstructs import *
 from statichash import *
 
 class DentryHash(StaticHash):

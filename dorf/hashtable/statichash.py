@@ -1,5 +1,3 @@
-from kstructs import *
-
 """
 This class is meant to handle Static Hash tables.
 Don't create one directly, it is meant to be inherited from.
