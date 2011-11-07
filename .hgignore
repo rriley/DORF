@@ -1,3 +1,11 @@
 syntax: glob
 
 *.pyc
+*.o
+*.ko
+*.cmd
+*.mod
+*.mod.c
+*.markers
+*.symvers
+*.order
