@@ -2,6 +2,8 @@
 
 """
 Remove an item from the PidHash table.
+This hides a process on recent kernels,
+such as 2.6.38
 
 Ryan Riley
 rriley.cs@gmail.com
