@@ -1,5 +1,8 @@
 from statichash import *
 
+import version
+exec("from dorf."+version.my_version+".kstructs import *")
+
 class DentryHash(StaticHash):
 	shift_name = "d_hash_shift"
 	hash_root_name = "dentry_hashtable"

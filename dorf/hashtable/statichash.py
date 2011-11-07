@@ -1,3 +1,6 @@
+import version
+exec("from dorf."+version.my_version+".kstructs import *")
+
 """
 This class is meant to handle Static Hash tables.
 Don't create one directly, it is meant to be inherited from.
@@ -22,7 +25,7 @@ class StaticHash:
 		self.dm = dm
 		self.shift = dm.read_int(sf.find(self.shift_name))
 		self.hashroot = dm.read_int(sf.find(self.hash_root_name))
-		print hex(self.hashroot)
+		#print hex(self.hashroot)
 
 	def print_all(self):
 		for i in range(0, 1 << self.shift):

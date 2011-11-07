@@ -10,9 +10,10 @@ rriley.cs@gmail.com
 import os, sys
 from ctypes import *
 
-from dorf.ubuntu910.kstructs import *
-from dorf.ubuntu910.memreader import *
-from dorf.ubuntu910.symbolfinder import *
+import version
+exec("from dorf."+version.my_version+".kstructs import *")
+exec("from dorf."+version.my_version+".memreader import *")
+exec("from dorf."+version.my_version+".symbolfinder import *")
 
 if len(sys.argv) != 1:
 	print "Usage: ",
