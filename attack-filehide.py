@@ -49,8 +49,8 @@ bh = buffer_head()
 print os.listdir(dirname)
 
 # Read in the first buffer_head from the LRU
-# The weird number is the offset to the array.  I don't know why.
-bh_addr = dm.read_int(bh_lrus + 0x04bf2000)
+# The offset is kernel specific and stored with the buffer_head
+bh_addr = dm.read_int(bh_lrus + bh.offset)
 dm.read(bh, bh_addr)
 
 # Go through the directory block and find the entry, then

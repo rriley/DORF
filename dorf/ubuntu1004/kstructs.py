@@ -130,7 +130,9 @@ class buffer_head(Structure):
 			('junk2', c_uint*6),
 			('b_count', c_uint)
 		   ]
-	
+
+	offset = 0x04fbf000
+
 	def __str__(self):
 		s = ""
 
