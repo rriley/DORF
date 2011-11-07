@@ -69,10 +69,10 @@ class task_struct(Structure):
 			('pid', c_int)
 		   ]
 	def prev(self):
-		return self.tasks.prev - list_offset
+		return self.tasks.prev - self.list_offset
 
 	def next(self):
-		return self.tasks.next - list_offset
+		return self.tasks.next - self.list_offset
 
 class qstr(Structure):
 	_fields_ = [	('hash', c_int),
