@@ -1,1 +1,1 @@
-my_version="ubuntu1004"
+my_version="ubuntu1110"

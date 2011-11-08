@@ -35,12 +35,8 @@ if os.path.exists(dirname) == False:
 	print "Parent directory does not exist!"
 	sys.exit(-1)
 
-# Declare our necessary pieces for this attack
 sf = SymbolFinder()
 dm = DevMemReader(sf)
-bh_lrus = sf.find("per_cpu__bh_lrus")
-
-bh = buffer_head()
 
 # Read the item's parent dir, this causes the block related to it
 # to end up at the head of the bh_lrus list.  Very convenient...
@@ -50,7 +46,9 @@ print os.listdir(dirname)
 
 # Read in the first buffer_head from the LRU
 # The offset is kernel specific and stored with the buffer_head
-bh_addr = dm.read_int(bh_lrus + bh.offset)
+bh = buffer_head()
+bh_lrus = bh.get_addr_first_bh(sf)
+bh_addr = dm.read_int(bh_lrus)
 dm.read(bh, bh_addr)
 
 # Go through the directory block and find the entry, then

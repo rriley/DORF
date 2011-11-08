@@ -23,16 +23,10 @@ if len(sys.argv) != 1:
 	print sys.argv[0]
 	sys.exit(-1)
 
-# Declare our necessary pieces for this attack
 sf = SymbolFinder()
 dm = DevMemReader(sf)
-bh_lrus = sf.find("bh_lrus")
 
-print "bh_lrus: " + hex(bh_lrus)
-
-bh = buffer_head()
-
-# Read the item's parent dir, this causes the block related to it
+# Read the CWD, this causes the block related to it
 # to end up at the head of the bh_lrus list.  Very convenient...
 # This might not work under heavy workloads, multi-core, etc.
 # (But it can be changed to handle multicore...)
@@ -40,14 +34,16 @@ print os.listdir(".")
 
 # Read in the first buffer_head from the LRU
 # The offset is kernel specific and stored with the buffer_head
-bh_addr = dm.read_int(bh_lrus + 0x1cbb7000)
+bh = buffer_head()
+bh_lrus = bh.get_addr_first_bh(sf)
+print "bh_lrus: " + hex(bh_lrus)
 
+bh_addr = dm.read_int(bh_lrus)
 print "bh_addr: " + hex(bh_addr)
 
 dm.read(bh, bh_addr)
 
-# Go through the directory block and find the entry, then
-# remove it.
+# Go through the directory block and print all entries
 # This will probably fail for large directories with more than
 # one block used to store their children...
 

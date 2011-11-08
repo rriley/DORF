@@ -131,7 +131,12 @@ class buffer_head(Structure):
 			('b_count', c_uint)
 		   ]
 
-	offset = 0x04bf2000
+	# Return the address to the first buffer head.
+	# This is kernel dependent, so it moves here.
+	# The offset below is found by the kernel module
+	def get_addr_first_bh(self, sf):
+		bh_lrus = sf.find("per_cpu__bh_lrus")
+		return bh_lrus+0x04bf2000
 	
 	def __str__(self):
 		s = ""
