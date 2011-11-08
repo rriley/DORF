@@ -38,6 +38,9 @@ if os.path.exists(dirname) == False:
 sf = SymbolFinder()
 dm = DevMemReader(sf)
 
+bh = buffer_head()
+bh_lrus = bh.get_addr_first_bh(sf)
+
 # Read the item's parent dir, this causes the block related to it
 # to end up at the head of the bh_lrus list.  Very convenient...
 # This might not work under heavy workloads, multi-core, etc.
@@ -46,8 +49,6 @@ print os.listdir(dirname)
 
 # Read in the first buffer_head from the LRU
 # The offset is kernel specific and stored with the buffer_head
-bh = buffer_head()
-bh_lrus = bh.get_addr_first_bh(sf)
 bh_addr = dm.read_int(bh_lrus)
 dm.read(bh, bh_addr)
 

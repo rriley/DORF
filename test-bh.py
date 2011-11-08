@@ -26,6 +26,12 @@ if len(sys.argv) != 1:
 sf = SymbolFinder()
 dm = DevMemReader(sf)
 
+# Prep work to calculate the address of the head of the bh_lru
+# list.
+bh = buffer_head()
+bh_lrus = bh.get_addr_first_bh(sf)
+print "bh_lrus: " + hex(bh_lrus)
+
 # Read the CWD, this causes the block related to it
 # to end up at the head of the bh_lrus list.  Very convenient...
 # This might not work under heavy workloads, multi-core, etc.
@@ -34,14 +40,9 @@ print os.listdir(".")
 
 # Read in the first buffer_head from the LRU
 # The offset is kernel specific and stored with the buffer_head
-bh = buffer_head()
-bh_lrus = bh.get_addr_first_bh(sf)
-print "bh_lrus: " + hex(bh_lrus)
-
 bh_addr = dm.read_int(bh_lrus)
-print "bh_addr: " + hex(bh_addr)
-
 dm.read(bh, bh_addr)
+print "bh_addr: " + hex(bh_addr)
 
 # Go through the directory block and print all entries
 # This will probably fail for large directories with more than
