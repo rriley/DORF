@@ -1,5 +1,6 @@
 /*  
- *  hello-1.c - The simplest kernel module.
+ *  Simple module to help find important values needed to port
+ *  DORF.
  */
 #include <linux/module.h>	/* Needed by all modules */
 #include <linux/kernel.h>	/* Needed for KERN_INFO */
@@ -8,7 +9,10 @@
 #include <linux/buffer_head.h>
 #include <linux/version.h>
 
-/* Some code to handle finding the offset to bh_lrus */
+/* Some code to handle finding the offset to bh_lrus 
+ * 3.0.0 might be the wrong version number, whenever 
+ * they got rid of per_cpu__blah could go back farther.
+ */
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(3,0,0)
 
 #define BH_LRU_SIZE	8
