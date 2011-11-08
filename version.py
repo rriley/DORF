@@ -1,1 +1,1 @@
-my_version="ubuntu1110"
+my_version="fedora15"
