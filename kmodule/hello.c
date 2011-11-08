@@ -7,6 +7,14 @@
 #include <linux/proc_fs.h>
 #include <linux/buffer_head.h>
 
+#define BH_LRU_SIZE	8
+
+struct bh_lru {
+ 	struct buffer_head *bhs[BH_LRU_SIZE];
+};
+
+DEFINE_PER_CPU(struct bh_lru, bob_lrus);
+
 int init_module(void)
 {
 	struct task_struct *bob = (struct task_struct *)NULL;
@@ -25,7 +33,10 @@ int init_module(void)
 	printk(KERN_INFO "vfs_inode: %d\n", (int)&(fred->vfs_inode));
 	printk(KERN_INFO "dentry.d_subdirs: %d\n", (int)&(a->d_subdirs));
 	printk(KERN_INFO "buffer_head size: %d\n", sizeof(struct buffer_head));
-	printk(KERN_INFO "offset of bh_lrus: %08x\n", (unsigned int)&per_cpu(bh_lrus, 0) - (unsigned int)&(per_cpu__bh_lrus));
+	//printk(KERN_INFO "offset of bh_lrus: %08x\n", (unsigned int)&per_cpu(bh_lrus, 0) - (unsigned int)&(per_cpu__bh_lrus));
+	printk(KERN_INFO "&bob_lrus: %08x\n", (unsigned int)&bob_lrus);
+	printk(KERN_INFO "&get_cpu_var(bob_lrus): %08x\n", (unsigned int)&get_cpu_var(bob_lrus));
+	printk(KERN_INFO "offset of bh_lrus: %08x\n", (unsigned int)&get_cpu_var(bob_lrus) - (unsigned int)&bob_lrus);
 
 	/* 
 	 * A non 0 return means init_module failed; module can't be loaded. 
