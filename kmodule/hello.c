@@ -16,6 +16,8 @@ struct bh_lru {
  	struct buffer_head *bhs[BH_LRU_SIZE];
 };
 DEFINE_PER_CPU(struct bh_lru, bob_lrus);
+#else
+int per_cpu__bh_lrus = 0;
 #endif
 
 int init_module(void)
