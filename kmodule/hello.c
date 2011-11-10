@@ -13,7 +13,7 @@
  * 2.6.40 might be the wrong version number, whenever 
  * they got rid of per_cpu__blah could go back farther.
  */
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,40)
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,37)
 
 #define BH_LRU_SIZE	8
 struct bh_lru {
@@ -30,7 +30,7 @@ int init_module(void)
 	struct proc_inode *fred = (struct proc_inode *) NULL;
 	struct dentry *a = (struct dentry *) NULL;
 
-	#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,40)
+	#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,37)
 	unsigned int bh_offset = (unsigned int)&get_cpu_var(bob_lrus) - (unsigned int)&bob_lrus;
 	#else
 	unsigned int bh_offset = (unsigned int)&per_cpu(bh_lrus, 0) - (unsigned int)&(per_cpu__bh_lrus);
