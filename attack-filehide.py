@@ -56,34 +56,11 @@ dm.read(bh, bh_addr)
 # remove it.
 # This will probably fail for large directories with more than
 # one block used to store their children...
-de = dir_entry()
-de_p = dir_entry()
-i = bh.b_data
-prev = 0
-print "Count: ",
-print hex(bh.b_count)
-while True:
-	dm.read(de, i)
-	if de.inode > 0:
-		print bh.b_data+i,
-		print de.inode,
-		print de.rec_len,
-		print de.name_len,
-		print de.file_type,
-		fname= dm.read_bytes(i+8,de.name_len)
-		print fname
-		if fname == basename:
-			print "found it!"
-			dm.read(de_p, prev)
-			de_p.rec_len += de.rec_len
-			dm.write(de_p, prev)
-			bh.b_count = bh.b_count+1
-			dm.write(bh,bh_addr)
-			break;
-		prev = i
-		i += de.rec_len
-		if i >= bh.b_data+bh.b_size:
-			break
-	else:
-		print "Done!"
-		break;
+de = dir_entry(dm)
+
+# Find the memory location of the dir_entry for the file we want
+loc = de.find_fname(bh.b_data, bh.b_data+bh.b_size, basename)
+
+# Bypass that entry in the inode
+if loc != 0:
+	de.remove(bh.b_data, loc)

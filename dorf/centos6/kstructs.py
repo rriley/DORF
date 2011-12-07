@@ -162,3 +162,40 @@ class dir_entry(Structure):
 			('name_len', c_byte),
 			('file_type', c_byte)
 		   ]
+
+	def __init__(self, dm):
+		self.dm = dm
+
+	# Starting at the directory entry at address i,
+	# search forward looking for a specific filename.
+	def find_fname(self, addr, limit, basename):
+		de = dir_entry(self.dm)
+
+		i = addr
+		while True:
+			self.dm.read(de, i)
+			if de.inode > 0:
+				fname = self.dm.read_bytes(i+8, de.name_len)
+				print fname
+				if fname == basename:
+					return i
+				i += de.rec_len
+				if i >= limit:
+					break
+			else:
+				break
+		return 0
+
+	def remove(self, start, addr):
+		de = dir_entry(self.dm)
+		nxt = dir_entry(self.dm)
+
+		i = start;
+		while True:
+			self.dm.read(de, i)
+			if addr == (i + de.rec_len):
+				self.dm.read(nxt, i+de.rec_len)
+				de.rec_len += nxt.rec_len
+				self.dm.write(de, i)
+				break
+			i += de.rec_len
